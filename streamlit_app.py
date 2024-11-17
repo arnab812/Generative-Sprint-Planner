@@ -453,6 +453,16 @@ st.markdown("""
 # Path to the image file
 image_path = "Arnab_Chakraborty_buidling_Generative_Sprint_Planner.jpg"
 
-st.image(image_path, caption="Arnab Chakraborty", width=200)
+st.image(image_path, caption="", width=200)
 
-st.markdown("[LinkedIn](https://www.linkedin.com/in/arnab-chakraborty-2881a31b7/)")
+# Display clickable LinkedIn link
+st.markdown(
+    """
+    <div style="padding-left: 20px">
+        <a href="https://www.linkedin.com/in/arnab-chakraborty-2881a31b7/" target="_blank">
+            Arnab Chakraborty
+        </a>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
