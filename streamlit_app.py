@@ -451,7 +451,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Path to the image file
-image_path = "Arnab_Chakraborty_buidling_Generative_Sprint_Planner.jpg"
+image_path = "Arnab_Chakraborty_Buidling_Generative_Sprint_Planner.jpg"
 
 st.image(image_path, caption="", width=200)
 
