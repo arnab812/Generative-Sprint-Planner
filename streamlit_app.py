@@ -268,7 +268,7 @@ st.markdown("### Product Team")
 st.markdown("""
 <div id="prod-table" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 2fr; font-weight: bold; background-color: #073642; border: 2px solid #36D556; border-radius: 5px; padding: 10px; margin-bottom: 10px; color: #E2EAF4; font-family: monospace;">
     <div style="flex: 2;">Product Owner</div>
-    <div style="flex: 1; text-align: center;">Role</div>
+    <div style="flex: 1; text-align: right;">Role</div>
     <div style="flex: 1; text-align: center;">Leave(day(s))</div>
     <div style="flex: 1; text-align: center;">Available Hours(h)</div>
 </div>
@@ -341,7 +341,7 @@ st.markdown("### Quality Assurance Team")
 st.markdown(""" 
 <div id="qa-table" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 2fr; font-weight: bold; background-color: #073642; border: 2px solid #DD2472; border-radius: 5px; padding: 10px; margin-bottom: 10px; color: #E2EAF4; font-family: monospace;"> 
     <div style="flex: 2;">Quality Analyst</div>
-    <div style="flex: 1; text-align: center">Role</div>
+    <div style="flex: 1; text-align: right">Role</div>
     <div style="flex: 1; text-align: center;">Leave(day(s))</div>
     <div style="flex: 1; text-align: center;">Available Hours(h)</div>
     <div style="flex: 2; text-align: center;">Accommodatable Story Points</div>
