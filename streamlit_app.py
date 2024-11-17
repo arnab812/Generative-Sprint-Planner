@@ -455,3 +455,4 @@ image_path = "Arnab_Chakraborty_buidling_Generative_Sprint_Planner.jpg"
 
 st.image(image_path, caption="Arnab Chakraborty", width=200)
 
+st.markdown("[LinkedIn](https://www.linkedin.com/in/arnab-chakraborty-2881a31b7/)")
