@@ -398,54 +398,35 @@ product_owner_df = pd.DataFrame(product_owner_data_for_snapshot, columns=["Produ
 
 # Capture Snapshot Button
 if st.button("Generate Sprint Snapshot"):
-    # Use BytesIO to create an in-memory buffer
     with io.BytesIO() as buffer:
         with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
             # Write Developers data to the sheet
+            developer_df = pd.DataFrame(developer_data_for_snapshot, columns=["Developer", "Role", "Leave(day(s))", "Available Hours(h)", "Story Points"])
             developer_df.to_excel(writer, sheet_name="Snapshot", index=False, startrow=0)
-            
-            # Write Quality Analysts data below Developers data
-            quality_startrow = len(developer_df) + 2  # Add 2 rows for spacing
-            quality_analyst_df.to_excel(writer, sheet_name="Snapshot", index=False, startrow=quality_startrow)
-            
-            # Write Product Owners data below Quality Analysts data
-            product_owner_startrow = quality_startrow + len(quality_analyst_df) + 2  # Add 2 rows for spacing
-            product_owner_df.to_excel(writer, sheet_name="Snapshot", index=False, startrow=product_owner_startrow)
-            
-            # Metrics start row (below Product Owners data)
-            metrics_startrow = product_owner_startrow + len(product_owner_df) + 3
-            
-            # Add column headers "Metric" and "Value"
-            worksheet = writer.sheets["Snapshot"]
-            worksheet.cell(row=metrics_startrow, column=1).value = "Metric"
-            bold_font = Font(bold=True)
-            worksheet.cell(row=metrics_startrow, column=1).font = bold_font
-            
-            # Add "Total Accommodatable Story Points" and its value
-            worksheet.cell(row=metrics_startrow + 1, column=1).value = f"Total Accommodatable Story Points: {total_story_points}"
-            
-            # Set column widths
-            worksheet.column_dimensions['A'].width = 40
-            worksheet.column_dimensions['B'].width = 45
-            worksheet.column_dimensions['C'].width = 15
-            worksheet.column_dimensions['D'].width = 20
-            worksheet.column_dimensions['E'].width = 20
-            
-            # Finalize the Excel file
-            writer.close()
-        
-        # Get the value of the in-memory buffer
-        buffer.seek(0)
-        excel_data = buffer.getvalue()
 
-    # Create a download button
-    st.download_button(
-        label="Download Sprint Snapshot",
-        data=excel_data,
-        file_name=f"{team_selected} Sprint-{sprint_number+1} Snapshot.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-    st.success(f"{team_selected} Sprint-{sprint_number+1} Snapshot prepared successfully!")
+            # Write Quality Analysts data below Developers data
+            quality_startrow = len(developer_df) + 2
+            quality_analyst_df = pd.DataFrame(quality_analyst_data_for_snapshot, columns=["Quality Analyst", "Role", "Leave(day(s))", "Available Hours(h)", "Story Points"])
+            quality_analyst_df.to_excel(writer, sheet_name="Snapshot", index=False, startrow=quality_startrow)
+
+            # Write Product Owners data below Quality Analysts data
+            product_owner_startrow = quality_startrow + len(quality_analyst_df) + 2
+            product_owner_df = pd.DataFrame(product_owner_data_for_snapshot, columns=["Product Owner", "Role", "Leave(day(s))", "Available Hours(h)"])
+            product_owner_df.to_excel(writer, sheet_name="Snapshot", index=False, startrow=product_owner_startrow)
+
+            # Save the Excel file to the buffer
+            writer.save()
+            buffer.seek(0)
+            excel_data = buffer.getvalue()
+
+            # Create a download button
+            st.download_button(
+                label="Download Sprint Snapshot",
+                data=excel_data,
+                file_name=f"{team_selected} Sprint-{sprint_number+1} Snapshot.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            )
+            st.success(f"{team_selected} Sprint-{sprint_number+1} Snapshot prepared successfully!")
 
 
 # TODO: About me
