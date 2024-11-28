@@ -431,8 +431,8 @@ if st.button("Generate Sprint Snapshot"):
             worksheet.column_dimensions['D'].width = 20
             worksheet.column_dimensions['E'].width = 20
             
-            # Save the Excel file to the buffer
-            writer.save()
+            # Finalize the Excel file
+            writer.close()
         
         # Get the value of the in-memory buffer
         buffer.seek(0)
