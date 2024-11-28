@@ -398,35 +398,30 @@ product_owner_df = pd.DataFrame(product_owner_data_for_snapshot, columns=["Produ
 
 # Capture Snapshot Button
 if st.button("Generate Sprint Snapshot"):
-    with io.BytesIO() as buffer:
-        with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
-            # Write Developers data to the sheet
-            developer_df = pd.DataFrame(developer_data_for_snapshot, columns=["Developer", "Role", "Leave(day(s))", "Available Hours(h)", "Story Points"])
-            developer_df.to_excel(writer, sheet_name="Snapshot", index=False, startrow=0)
-
-            # Write Quality Analysts data below Developers data
-            quality_startrow = len(developer_df) + 2
-            quality_analyst_df = pd.DataFrame(quality_analyst_data_for_snapshot, columns=["Quality Analyst", "Role", "Leave(day(s))", "Available Hours(h)", "Story Points"])
-            quality_analyst_df.to_excel(writer, sheet_name="Snapshot", index=False, startrow=quality_startrow)
-
-            # Write Product Owners data below Quality Analysts data
-            product_owner_startrow = quality_startrow + len(quality_analyst_df) + 2
-            product_owner_df = pd.DataFrame(product_owner_data_for_snapshot, columns=["Product Owner", "Role", "Leave(day(s))", "Available Hours(h)"])
-            product_owner_df.to_excel(writer, sheet_name="Snapshot", index=False, startrow=product_owner_startrow)
-
-            # Save the Excel file to the buffer
-            writer.save()
-            buffer.seek(0)
-            excel_data = buffer.getvalue()
-
-            # Create a download button
-            st.download_button(
-                label="Download Sprint Snapshot",
-                data=excel_data,
-                file_name=f"{team_selected} Sprint-{sprint_number+1} Snapshot.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            )
-            st.success(f"{team_selected} Sprint-{sprint_number+1} Snapshot prepared successfully!")
+    buffer = io.BytesIO()
+    
+    # Use XlsxWriter to write the Excel file
+    with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+        developer_df = pd.DataFrame(developer_data_for_snapshot, columns=["Developer", "Role", "Leave(day(s))", "Available Hours(h)", "Story Points"])
+        developer_df.to_excel(writer, sheet_name='Developers', index=False)
+        
+        quality_analyst_df = pd.DataFrame(quality_analyst_data_for_snapshot, columns=["Quality Analyst", "Role", "Leave(day(s))", "Available Hours(h)", "Story Points"])
+        quality_analyst_df.to_excel(writer, sheet_name='Quality Analysts', index=False)
+        
+        product_owner_df = pd.DataFrame(product_owner_data_for_snapshot, columns=["Product Owner", "Role", "Leave(day(s))", "Available Hours(h)"])
+        product_owner_df.to_excel(writer, sheet_name='Product Owners', index=False)
+    
+    # Prepare buffer for download
+    buffer.seek(0)
+    
+    # Create a download button
+    st.download_button(
+        label="Download Sprint Snapshot",
+        data=buffer,
+        file_name=f"{team_selected} Sprint-{sprint_number+1} Snapshot.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+    st.success("Sprint snapshot prepared successfully!")
 
 
 # TODO: About me
