@@ -8,6 +8,9 @@ import math
 from openpyxl.styles import Font
 from datetime import datetime, timedelta
 
+# alignment
+from openpyxl.styles import Font, Alignment
+
 # ! enabling download of the excel report in cloud
 import io
 
@@ -425,6 +428,7 @@ if st.button("Generate Sprint Snapshot"):
             worksheet.cell(row=metrics_startrow, column=1).value = "Metric"
             bold_font = Font(bold=True)
             worksheet.cell(row=metrics_startrow, column=1).font = bold_font
+            worksheet.cell(row=metrics_startrow, column=1).alignment = center_alignment
             
             # Add "Total Accommodatable Story Points" and its value
             total_story_points = sum([data[-1] for data in developer_data_for_snapshot])  # Example calculation
