@@ -427,6 +427,7 @@ if st.button("Generate Sprint Snapshot"):
             worksheet = writer.sheets["Snapshot"]
             worksheet.cell(row=metrics_startrow, column=1).value = "Metric"
             bold_font = Font(bold=True)
+            center_alignment = Alignment(horizontal="center")
             worksheet.cell(row=metrics_startrow, column=1).font = bold_font
             worksheet.cell(row=metrics_startrow, column=1).alignment = center_alignment
             
