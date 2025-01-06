@@ -84,20 +84,10 @@ st.markdown('<h1 class="title">Generative Sprint Planner</h1>', unsafe_allow_htm
 # TODO: Sprint 
 # Function to calculate sprint number based on the current date
 def calculate_sprint_number(current_date):
-    """
-    Calculates the sprint number based on the current date.
-    Sprints start on the first Friday of the year and are 2 weeks long.
-    The sprint number resets to 1 at the start of a new year.
-    """
-    # Determine the year
-    year = current_date.year
+    # Sprint starts on Friday and ends on next Thursday (2-week cycle)
+    start_of_year = datetime(2025, 1, 2)  # First sprint starts on 5th January 2024 (Friday)
     
-    # Find the first Friday of the year
-    start_of_year = datetime(year, 1, 1)
-    while start_of_year.weekday() != 4:  # 4 corresponds to Friday
-        start_of_year += timedelta(days=1)
-    
-    # Calculate the difference in days from the start of the year
+    # Calculate days difference between current date and the start of the year
     days_diff = (current_date - start_of_year).days
     
     # A sprint is 14 days long (2 weeks)
