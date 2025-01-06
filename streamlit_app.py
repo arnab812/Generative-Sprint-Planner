@@ -91,7 +91,7 @@ def calculate_sprint_number(current_date):
     days_diff = (current_date - start_of_year).days
     
     # A sprint is 14 days long (2 weeks)
-    sprint_number = (days_diff // 14) + 1  # Add 1 because we start counting from sprint 1
+    sprint_number = (days_diff // 14) # Add 1 because we start counting from sprint 1
     return sprint_number
 
 # Get the current date
